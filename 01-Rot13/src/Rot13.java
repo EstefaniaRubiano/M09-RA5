@@ -14,7 +14,6 @@ public class Rot13 {
 
         // Arrays amb cadenes de prova
         String[] provesXifrar = {"ABC", "XYZ", "Hola, Mr. calçot", "Perdó, per tu què és?"};
-        String[] provesDesxifrar = {"IÏJ", "FGH", "Òwúi, Ùá. jiúkwb", "Zmálx, zmá bc acñ nà?"};
 
         // Bloc de xifrat
         System.out.println("Xifrat");
@@ -28,10 +27,11 @@ public class Rot13 {
         // Bloc de desxifrat
         System.out.println("Desxifrat");
         System.out.println("---------");
-        for (int i = 0; i < provesDesxifrar.length; i++) {
-            String cadena = provesDesxifrar[i];
-            String cadenaDesxifrada = desxifraRot13(cadena);
-            System.out.println(cadena + " => " + cadenaDesxifrada);
+        for (int i = 0; i < provesXifrar.length; i++) {
+            String cadena = provesXifrar[i];
+            String cadenaXifrada = xifraRot13(cadena);
+            String cadenaDesxifrada = desxifraRot13(cadenaXifrada);
+            System.out.println(cadenaXifrada + " => " + cadenaDesxifrada);
         }
 
     }
