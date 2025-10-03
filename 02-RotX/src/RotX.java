@@ -44,7 +44,7 @@ public class RotX {
 
     }
 
-    // Métode que xifra una cadena donada utilitzant ROTX
+    // Métode que xifra una cadena donada, segons el desplacamnt donat, utilitzant ROTX
     public static String xifraRotX(String cadena, int desplacament) {
         String textXifrat = "";
 
@@ -74,7 +74,7 @@ public class RotX {
         return textXifrat;
     }
 
-    // Métode que desxifra una cadena donada utilitzant ROTX
+    // Métode que desxifra una cadena donada, segons el desplaçamnt donat, utilitzant ROTX
     public static String desxifraRotX(String cadena, int desplacament) {
         String textDesxifrat = "";
 
@@ -105,6 +105,7 @@ public class RotX {
         return textDesxifrat;
     }
 
+    // Métode que desxifra una cadena provant tots els desplaçaments possibles i mostra els missatges resultants
     public static void forcaBrutaRotX(String cadenaXifrada) {
         System.out.println("\n Missatge xifrat: " + cadenaXifrada + "\n");
 
