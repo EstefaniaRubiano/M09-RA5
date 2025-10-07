@@ -76,16 +76,8 @@ public class Monoalfabetic {
             // Busca la posició a l'alfabet original (majúscules)
             int posCaracter = buscaPosicio(arrayAlfabet, lletraMaj);
 
-<<<<<<< HEAD
-            } else {
-                // Busca la posició del caràcter dins l'abecedari en minúscules
-                posCaracter = buscaPosicio(arrayAlfabetMin, c);
-
-                if (posCaracter != -1) {
-=======
             if (posCaracter != -1){
                 if (esMinuscula) {
->>>>>>> 01f7e1890d27c5405c5397de09a0ba1b13872078
                     textXifrat += Character.toLowerCase(alfabetPermutat[posCaracter]);
                 } else {
                     textXifrat += alfabetPermutat[posCaracter];
