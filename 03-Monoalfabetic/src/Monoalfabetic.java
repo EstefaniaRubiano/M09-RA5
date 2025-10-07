@@ -7,7 +7,6 @@
  * utilitzant la permutació generada inicialment
  * desxifraMonoAlfa(cadena) que desxifre la cadena del paràmetre i torni una cadena dexifrada amb
  * monoalfabètic.
- * collections.shuffle
  */
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ import java.util.List;
 public class Monoalfabetic {
     
     static char[] arrayAlfabet = "AÀÁÄBCDEÈÉËFGHIÌÍÏJKLMNÑOÒÓÖPQRSTUÙÚÜVWXYZ".toCharArray();
-    static char[] arrayAlfabetMin = new String(arrayAlfabet).toLowerCase().toCharArray();
     static char[] alfabetPermutat = permutaAlfabet(arrayAlfabet);
+    
     public static void main(String[]args) {
 
         // Arrays amb cadenes de prova
@@ -40,7 +39,7 @@ public class Monoalfabetic {
         for (int i = 0; i < provesXifrar.length; i++) {
             String cadena = provesXifrar[i];
             String cadenaXifrada = xifraMonoAlfa(cadena);
-            String cadenaDesxifrada = desxifraMonoAlfa(cadena);
+            String cadenaDesxifrada = desxifraMonoAlfa(cadenaXifrada);
             System.out.println("(" + i + ") -" + cadenaXifrada + " => " + cadenaDesxifrada);
         }
 
@@ -71,23 +70,21 @@ public class Monoalfabetic {
         for (int i = 0; i < cadena.length(); i++) {
             char c = cadena.charAt(i);
 
-            // Busca la posició del caràcter dins l'abecedari en majúscules
-            int posCaracter = buscaPosicio(arrayAlfabet, c);
+            boolean esMinuscula = Character.isLowerCase(c);
+            char lletraMaj = Character.toUpperCase(c);
 
-            if (posCaracter != -1) {
-                textXifrat += alfabetPermutat[posCaracter];
+            // Busca la posició a l'alfabet original (majúscules)
+            int posCaracter = buscaPosicio(arrayAlfabet, lletraMaj);
 
-            } else {
-                // Busca la posició del caràcter dins l'abecedari en minúscules
-                // char[] arrayAlfabetMin = new String(arrayAlfabet).toLowerCase().toCharArray();
-                posCaracter = buscaPosicio(arrayAlfabetMin, c);
-
-                if (posCaracter != -1) {
+            if (posCaracter != -1){
+                if (esMinuscula) {
                     textXifrat += Character.toLowerCase(alfabetPermutat[posCaracter]);
                 } else {
-                    // Si no és cap lletra, l'afegim igual
-                    textXifrat += c;
+                    textXifrat += alfabetPermutat[posCaracter];
                 }
+            } else {
+                // Si no és una lletra del alfabet, la deixem igual
+                textXifrat += c;
             }
             
         }
@@ -102,23 +99,21 @@ public class Monoalfabetic {
         for (int i = 0; i < cadena.length(); i++) {
             char c = cadena.charAt(i);
 
-            // Busca la posició del caràcter dins l'abecedari en majúscules
-            int posCaracter = buscaPosicio(alfabetPermutat, c);
+            boolean esMinuscula = Character.isLowerCase(c);
+            char lletraMaj = Character.toUpperCase(c);
 
-            if (posCaracter != -1) {
-                textDesxifrat += arrayAlfabet[posCaracter];
+            // Busca la posició a l'alfabet PERMUTAT (majúscules)
+            int posCaracter = buscaPosicio(alfabetPermutat, lletraMaj);
 
-            } else {
-                // Busca la posició del caràcter dins l'abecedari en minúscules
-                char[] alfabetPermutatMin = new String(alfabetPermutat).toLowerCase().toCharArray();
-                posCaracter = buscaPosicio(alfabetPermutatMin, c);
-
-                if (posCaracter != -1) {
+            if (posCaracter != -1){
+                if (esMinuscula) {
                     textDesxifrat += Character.toLowerCase(arrayAlfabet[posCaracter]);
                 } else {
-                    // Si no és cap lletra, l'afegim igual
-                    textDesxifrat += c;
+                    textDesxifrat += arrayAlfabet[posCaracter];
                 }
+            } else {
+                // Si no és una lletra del alfabet, la deixem igual
+                textDesxifrat += c;
             }
             
         }
@@ -139,4 +134,4 @@ public class Monoalfabetic {
         }
         return -1;
     }
-}
+}   
