@@ -79,7 +79,6 @@ public class Monoalfabetic {
 
             } else {
                 // Busca la posició del caràcter dins l'abecedari en minúscules
-                // char[] arrayAlfabetMin = new String(arrayAlfabet).toLowerCase().toCharArray();
                 posCaracter = buscaPosicio(arrayAlfabetMin, c);
 
                 if (posCaracter != -1) {
