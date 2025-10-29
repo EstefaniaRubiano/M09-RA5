@@ -1,5 +1,13 @@
 /*
+ * Polialfabetic.java
+ * ------------------
+ * Programa que xifra i desxifra textos amb un mètode polialfabètic.
  * 
+ * Funciona així:
+ * 1. Genera una permutació aleatòria de l'alfabet per cada lletra.
+ * 2. Substitueix cada lletra del text segons l'alfabet permutat.
+ * 3. Manté els caràcters que no són lletres sense canviar.
+ * 4. Utilitza una clau secreta per poder desxifrar el text correctament.
  */
 
 import java.util.ArrayList;
@@ -46,9 +54,7 @@ public class Polialfabetic {
         for (char c : alfabet) {
             llista.add(c);
         }
-
         Collections.shuffle(llista, rnd);
-
         for (int i = 0; i < llista.size(); i++) {
             alfabetPermutat[i] = llista.get(i);
         }
@@ -60,18 +66,13 @@ public class Polialfabetic {
     public static String xifraPoliAlfa(String msg) {
 
         String textXifrat = "";
-
         for (int i = 0; i < msg.length(); i++) {
             char c = msg.charAt(i);
-
             permutaAlfabet(arrayAlfabet);
-
             boolean esMinuscula = Character.isLowerCase(c);
             char lletraMaj = Character.toUpperCase(c);
-
             // Busca la posició a l'alfabet original (majúscules)
             int posCaracter = buscaPosicio(arrayAlfabet, lletraMaj);
-
             if (posCaracter != -1){
                 if (esMinuscula) {
                     textXifrat += Character.toLowerCase(alfabetPermutat[posCaracter]);
@@ -82,30 +83,21 @@ public class Polialfabetic {
                 // Si no és una lletra del alfabet, la deixem igual
                 textXifrat += c;
             }
-            
         }
-
         return textXifrat;
-        
     }
 
     // Métode que desxifra la cadena del paràmetre i torna una cadena 
     // desxifrada amb polialfabètic
     public static String desxifraPoliAlfa(String msgXifrat) {
-
         String textDesxifrat = "";
-
         for (int i = 0; i < msgXifrat.length(); i++) {
             char c = msgXifrat.charAt(i);
-
             permutaAlfabet(arrayAlfabet);
-
             boolean esMinuscula = Character.isLowerCase(c);
             char lletraMaj = Character.toUpperCase(c);
-
             // Busca la posició a l'alfabet PERMUTAT (majúscules)
             int posCaracter = buscaPosicio(alfabetPermutat, lletraMaj);
-
             if (posCaracter != -1){
                 if (esMinuscula) {
                     textDesxifrat += Character.toLowerCase(arrayAlfabet[posCaracter]);
@@ -116,9 +108,7 @@ public class Polialfabetic {
                 // Si no és una lletra del alfabet, la deixem igual
                 textDesxifrat += c;
             }
-            
         }
-
         return textDesxifrat;
     }
 
@@ -128,12 +118,10 @@ public class Polialfabetic {
 
         for (int j = 0; j < array.length; j++) {
             char c = array[j];
-
             if (lletra == c) {
                 return j; 
             }
         }
         return -1;
     }
-
 }
