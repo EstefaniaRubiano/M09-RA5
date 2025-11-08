@@ -16,10 +16,38 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class XifradorMonoalfabetic {
+public class XifradorMonoalfabetic implements Xifrador{
     
     char[] arrayAlfabet = "AÀÁÄBCDEÈÉËFGHIÌÍÏJKLMNÑOÒÓÖPQRSTUÙÚÜVWXYZ".toCharArray();
-    char[] alfabetPermutat = permutaAlfabet(arrayAlfabet);
+    char[] alfabetPermutat;
+
+    // Inicialitza la permutació en el constructor
+    public XifradorMonoalfabetic() {
+       alfabetPermutat = permutaAlfabet(arrayAlfabet); 
+    }
+
+    @Override
+    // Mètode per xifrar un text
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        
+        // Només admet clau null
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratge monoalfabètic no suporta una clau diferent a null");
+        }
+
+        // Xifra amb el mètode monoalfabètic
+        return new TextXifrat(xifraMonoAlfa(msg).getBytes());
+    }
+
+    @Override
+    // Mètode per desxifrar un text
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratge monoalfabètic no suporta una clau diferent a null");
+        }
+
+        return desxifraMonoAlfa(new String(xifrat.getBytes()));
+    }
 
     // Métode que genera una permutació de l'alfabet donat 
     public char[] permutaAlfabet(char[] alfabet) {

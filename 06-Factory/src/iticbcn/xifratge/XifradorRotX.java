@@ -12,13 +12,46 @@ missatge resultant de desxifrar amb desplaçaments de 1,2,3,... fins la longitud
 Crea també un main per fer algunes proves.
 */
 
+public class XifradorRotX implements Xifrador{
+
+    private static char[] arrayAbecedariMin = "aàáäbcdeèéëfghiìíïjklmnñoòóöpqrstuùúüvwxyz".toCharArray();
+    private static char[] arrayAbecedariMaj = "AÀÁÄBCDEÈÉËFGHIÌÍÏJKLMNÑOÒÓÖPQRSTUÙÚÜVWXYZ".toCharArray();
 
 
-public class XifradorRotX {
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        // Convertim la clau a int
+        int desplacament;
+        try {
+            desplacament = Integer.parseInt(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
 
-    static char[] arrayAbecedariMin = "aàáäbcdeèéëfghiìíïjklmnñoòóöpqrstuùúüvwxyz".toCharArray();
-    static char[] arrayAbecedariMaj = "AÀÁÄBCDEÈÉËFGHIÌÍÏJKLMNÑOÒÓÖPQRSTUÙÚÜVWXYZ".toCharArray();
+        if (desplacament < 0 || desplacament > 40) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
 
+        // Xifrem i retornem TextXifrat
+        return new TextXifrat(xifraRotX(msg, desplacament).getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        int desplacament;
+        try {
+            desplacament = Integer.parseInt(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        if (desplacament < 0 || desplacament > 40) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+
+        // Desxifrem el TextXifrat
+        return desxifraRotX(new String(xifrat.getBytes()), desplacament);
+    }
 
     // Métode que xifra una cadena donada, segons el desplacamnt donat, utilitzant ROTX
     public String xifraRotX(String cadena, int desplacament) {
@@ -51,7 +84,7 @@ public class XifradorRotX {
     }
 
     // Métode que desxifra una cadena donada, segons el desplaçamnt donat, utilitzant ROTX
-    public static String desxifraRotX(String cadena, int desplacament) {
+    public String desxifraRotX(String cadena, int desplacament) {
         String textDesxifrat = "";
 
         for (int i = 0; i < cadena.length(); i++) {
@@ -82,7 +115,7 @@ public class XifradorRotX {
     }
 
     // Métode que desxifra una cadena provant tots els desplaçaments possibles i mostra els missatges resultants
-    public static void forcaBrutaRotX(String cadenaXifrada) {
+    public void forcaBrutaRotX(String cadenaXifrada) {
         System.out.println("\n Missatge xifrat: " + cadenaXifrada + "\n");
 
         for (int i = 0; i < arrayAbecedariMaj.length; i++) {
@@ -94,7 +127,7 @@ public class XifradorRotX {
 
     // Métode que busca la posició d'un caràcter en un array donat
     // Retorna l'índex si el troba o -1 si no és
-    public static int buscaPosicio(char[] array, char lletra ) {
+    public int buscaPosicio(char[] array, char lletra ) {
 
         for (int j = 0; j < array.length; j++) {
             char c = array[j];

@@ -12,7 +12,7 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class XifradorAES {
+public class XifradorAES implements Xifrador{
     
     public static final String ALGORISME_XIFRAT = "AES";
     public static final String ALGORISME_HASH = "SHA-256";
@@ -22,8 +22,33 @@ public class XifradorAES {
     private static byte[] iv = new byte[MIDA_IV];
     private static final String CLAU = "Chulin";
 
+    @Override
+    // Mètode per xifrar un text
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        try {
+            byte[] xifrat = XifraAES(msg, clau);
+            return new TextXifrat(xifrat);
+        } catch (Exception e) {
+            System.err.println("Error xifrant amb AES: " + e.getMessage());
+            System.exit(1);
+            return null; // mai s'arriba aqui
+        }
+    }
+
+    @Override
+    // Mètode per desxifrar un text
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        try {
+            return desxifraAES(xifrat.getBytes(), clau);
+        } catch (Exception e) {
+            System.err.println("Error desxifrant amb AES: " + e.getMessage());
+            System.exit(1);
+            return null; // mai s'arriba aqui
+        }
+    }
+
     // Métode que xifra un text amb AES i retorna els bytes xifrats.
-    public static byte[] XifraAES(String msg, String clau) throws Exception{
+    public byte[] XifraAES(String msg, String clau) throws Exception{
         // Obtenir els bytes de l'String
         byte[] byteArray = msg.getBytes();
         
@@ -34,7 +59,7 @@ public class XifradorAES {
 
         // Genera hash
         MessageDigest messageDigest = MessageDigest.getInstance(ALGORISME_HASH);
-        byte[] key = messageDigest.digest(CLAU.getBytes());
+        byte[] key = messageDigest.digest(clau.getBytes());
         SecretKeySpec secretKey = new SecretKeySpec(key, ALGORISME_XIFRAT);
 
         // Encrypt
@@ -52,7 +77,7 @@ public class XifradorAES {
     }
 
     // Métode que desxifra els bytes xifrats i retorna el text original.
-    public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
+    public String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
 
         // Extreure l'IV
         byte[] ivExtraido = new byte[MIDA_IV];
